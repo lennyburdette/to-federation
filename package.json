@@ -1,0 +1,30 @@
+{
+  "name": "@lennyburdette/to-federation",
+  "version": "0.1.0",
+  "type": "module",
+  "license": "MIT",
+  "bin": "./index.js",
+  "files": ["index.js"],
+  "devDependencies": {
+    "@apollo/federation": "^0.24.0",
+    "@graphql-tools/utils": "^7.9.1",
+    "@types/jest": "^26.0.23",
+    "@types/node": "^15.0.2",
+    "esbuild": "^0.11.19",
+    "esbuild-jest": "^0.5.0",
+    "get-stdin": "^9.0.0",
+    "graphql": "^15.5.0",
+    "jest": "^26.6.3",
+    "meow": "^10.0.0",
+    "prettier": "^2.2.1",
+    "typescript": "^4.2.4"
+  },
+  "engines": {
+    "node": ">=14.16.1"
+  },
+  "scripts": {
+    "build": "esbuild src/index.ts --platform=node --target=node14 --bundle --format=esm --external:fs/promises --external:node:path --external:node:url --banner:js=\"#!/usr/bin/env node\nimport {createRequire} from 'module';const require = createRequire(import.meta.url);\" --outfile=index.js",
+    "prepublishOnly": "yarn build --minify",
+    "test": "jest"
+  }
+}

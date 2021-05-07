@@ -1,0 +1,7 @@
+"""
+Astronaut entity type
+"""
+type Astronaut @key(fields: "id") {
+  id: ID!
+  name: String @deprecated(reason: "not needed")
+}
