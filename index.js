@@ -37045,6 +37045,9 @@ function fromValidSDLToFederatedSDL(sdl) {
 
 // src/index.ts
 var cli = meow_default(`
+  Convert GraphQL SDL intended for Apollo Federation into valid SDL while 
+  preserving Federation directives, and vice-versa.
+  
 	Usage
 	  $ to-federation --schema <filename>
 

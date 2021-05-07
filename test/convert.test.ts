@@ -6,9 +6,13 @@ import {
 test("fromFederatedSDLToValidSDL", async () => {
   expect(
     fromFederatedSDLToValidSDL(`
-    type Astronaut @key(fields: "id") {
+    extend type Query {
+      me: User
+    }
+
+    type User @key(fields: "id") {
       id: ID!
-      name: String @deprecated
+      username: String!
     }
   `)
   ).toMatchInlineSnapshot(`
@@ -26,17 +30,18 @@ test("fromFederatedSDLToValidSDL", async () => {
 
     directive @provides(fields: String!) on FIELD_DEFINITION
 
-    type Astronaut @key(fields: \\"id\\") {
+    type User @key(fields: \\"id\\") {
       id: ID!
-      name: String @deprecated
+      username: String!
     }
 
     type Query {
       _entities(representations: [_Any!]!): [_Entity]!
       _service: _Service!
+      me: User
     }
 
-    union _Entity = Astronaut
+    union _Entity = User
 
     scalar _Any
 
@@ -51,6 +56,10 @@ test("fromFederatedSDLToValidSDL", async () => {
 test("fromValidSDLToFederatedSDL", async () => {
   expect(
     fromValidSDLToFederatedSDL(`
+    schema {
+      query: Query
+    }
+
     directive @key(fields: String!) on OBJECT | INTERFACE
 
     directive @extends on OBJECT | INTERFACE
@@ -61,31 +70,34 @@ test("fromValidSDLToFederatedSDL", async () => {
 
     directive @provides(fields: String!) on FIELD_DEFINITION
 
-    type Astronaut @key(fields: "id") {
+    type User @key(fields: "id") {
       id: ID!
-      name: String @deprecated
+      username: String!
     }
 
     type Query {
       _entities(representations: [_Any!]!): [_Entity]!
       _service: _Service!
+      me: User
     }
 
-    union _Entity = Astronaut
+    union _Entity = User
 
     scalar _Any
 
     type _Service {
-      """
-      The sdl representing the federated service capabilities. Includes federation directives, removes federation types, and includes rest of full schema after schema directives have been applied
-      """
+      """The sdl representing the federated service capabilities. Includes federation directives, removes federation types, and includes rest of full schema after schema directives have been applied"""
       sdl: String
     }
   `)
   ).toMatchInlineSnapshot(`
-    "type Astronaut @key(fields: \\"id\\") {
+    "type Query {
+      me: User
+    }
+
+    type User @key(fields: \\"id\\") {
       id: ID!
-      name: String @deprecated
+      username: String!
     }
     "
   `);
