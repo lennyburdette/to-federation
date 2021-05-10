@@ -37053,7 +37053,7 @@ var cli = meow_default(`
 
 	Options
     --string,  -s  Schema file to transform. Pass '-' to use stdin.
-	  --reverse, -r  Transform a federated schema to non-federated one.
+	  --reverse, -r  Transform a valid schema to federated schema.
 
 	Examples
 	  $ to-federation --schema myschema.graphql

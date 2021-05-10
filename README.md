@@ -37,4 +37,4 @@ npx github:lennyburdette/to-federation --schema accounts.graphql --reverse | \
   transformation and expect the same output.
 - Line numbers change completely, so the schema linting report won't accurately
   reference lines and columns in the original file.
-- Federation elements like \_Entity may not pass your lint rules.
+- Federation elements like `\_Entity` may not pass your lint rules.
