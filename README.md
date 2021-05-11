@@ -26,9 +26,25 @@ npx github:lennyburdette/to-federation --schema accounts.graphql --reverse | \
   rover subgraph publish mygraph@current --name accounts --schema -
 ```
 
+You can ignore common lint failures on federation elements like `_Entity` by
+adding a [configuration file][config] with these settings:
+
+```json
+{
+  "ignore": {
+    "arguments-have-descriptions": ["Query._entities.representations"],
+    "fields-are-camel-cased": ["Query._entities", "Query._service"],
+    "fields-have-descriptions": ["Query._entities", "Query._service"],
+    "types-have-descriptions": ["Query", "_Entity", "_Any", "_Service"],
+    "types-are-capitalized": ["_Service"]
+  }
+}
+```
+
 [fed]: https://www.apollographql.com/docs/federation/
 [lint]: https://github.com/cjoudrey/graphql-schema-linter
 [rover]: https://www.apollographql.com/docs/rover/
+[config]: https://github.com/cjoudrey/graphql-schema-linter#configuration-file
 
 ## Caveats
 
@@ -37,4 +53,3 @@ npx github:lennyburdette/to-federation --schema accounts.graphql --reverse | \
   transformation and expect the same output.
 - Line numbers change completely, so the schema linting report won't accurately
   reference lines and columns in the original file.
-- Federation elements like `\_Entity` may not pass your lint rules.

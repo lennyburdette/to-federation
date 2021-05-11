@@ -1452,9 +1452,9 @@ var require_js_tokens = __commonJS({
   }
 });
 
-// node_modules/@babel/highlight/node_modules/escape-string-regexp/index.js
+// node_modules/escape-string-regexp/index.js
 var require_escape_string_regexp = __commonJS({
-  "node_modules/@babel/highlight/node_modules/escape-string-regexp/index.js"(exports, module) {
+  "node_modules/escape-string-regexp/index.js"(exports, module) {
     "use strict";
     var matchOperatorsRe = /[|\\{}()[\]^$+*?.]/g;
     module.exports = function(str) {

@@ -2,6 +2,13 @@
 Astronaut entity type
 """
 type Astronaut @key(fields: "id") {
+  """
+  Astronaut ID
+  """
   id: ID!
+
+  """
+  Astronaut name
+  """
   name: String @deprecated(reason: "not needed")
 }
