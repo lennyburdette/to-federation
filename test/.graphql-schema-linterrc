@@ -1,0 +1,9 @@
+{
+  "ignore": {
+    "arguments-have-descriptions": ["Query._entities.representations"],
+    "fields-are-camel-cased": ["Query._entities", "Query._service"],
+    "fields-have-descriptions": ["Query._entities", "Query._service"],
+    "types-have-descriptions": ["Query", "_Entity", "_Any", "_Service"],
+    "types-are-capitalized": ["_Service"]
+  }
+}

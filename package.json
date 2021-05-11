@@ -4,7 +4,9 @@
   "type": "module",
   "license": "MIT",
   "bin": "./index.js",
-  "files": ["index.js"],
+  "files": [
+    "index.js"
+  ],
   "devDependencies": {
     "@apollo/federation": "^0.24.0",
     "@graphql-tools/utils": "^7.9.1",
@@ -14,6 +16,7 @@
     "esbuild-jest": "^0.5.0",
     "get-stdin": "^9.0.0",
     "graphql": "^15.5.0",
+    "graphql-schema-linter": "^2.0.1",
     "jest": "^26.6.3",
     "meow": "^10.0.0",
     "prettier": "^2.2.1",
