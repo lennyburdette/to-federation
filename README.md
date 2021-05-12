@@ -1,3 +1,6 @@
+⚠️ **EXPERIMENTAL**: this project is unpublished and available only via Github.
+Please feel free to submit issues but I can't guarantee a response.
+
 # to-federation
 
 Utility for converting GraphQL schemas intended for [Apollo Federation][fed]
