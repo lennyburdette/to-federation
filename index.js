@@ -37025,7 +37025,19 @@ var import_graphql = __toModule(require_graphql2());
 var import_federation = __toModule(require_dist2());
 var import_utils = __toModule(require_index_cjs2());
 function fromFederatedSDLToValidSDL(sdl) {
-  const schema = (0, import_federation.buildFederatedSchema)((0, import_graphql.parse)(sdl));
+  var _a, _b, _c, _d, _e;
+  const parsed = (0, import_graphql.parse)(sdl);
+  const schema = (0, import_federation.buildFederatedSchema)(parsed);
+  const originalSchemaDirectives = (_b = (_a = parsed.definitions.find((def) => def.kind === "SchemaDefinition")) == null ? void 0 : _a.directives) != null ? _b : [];
+  schema.astNode = __objSpread(__objSpread({
+    kind: "SchemaDefinition",
+    operationTypes: []
+  }, (_c = schema.astNode) != null ? _c : {}), {
+    directives: [
+      ...(_e = (_d = schema.astNode) == null ? void 0 : _d.directives) != null ? _e : [],
+      ...originalSchemaDirectives
+    ]
+  });
   return (0, import_utils.printSchemaWithDirectives)(schema);
 }
 function fromValidSDLToFederatedSDL(sdl) {

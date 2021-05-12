@@ -6,17 +6,25 @@ import {
 test("fromFederatedSDLToValidSDL", async () => {
   expect(
     fromFederatedSDLToValidSDL(`
+    schema @core(feature: "http://specs.apollo.dev/core/v0.1") {
+      query: Query
+    }
+
     extend type Query {
       me: User
     }
 
     type User @key(fields: "id") {
       id: ID!
-      username: String!
+      username: String! @custom
     }
+
+    directive @core(feature: String!) repeatable on SCHEMA 
+
+    directive @custom on FIELD_DEFINITION
   `)
   ).toMatchInlineSnapshot(`
-    "schema {
+    "schema @core(feature: \\"http://specs.apollo.dev/core/v0.1\\") {
       query: Query
     }
 
@@ -30,9 +38,13 @@ test("fromFederatedSDLToValidSDL", async () => {
 
     directive @provides(fields: String!) on FIELD_DEFINITION
 
+    directive @core(feature: String!) repeatable on SCHEMA
+
+    directive @custom on FIELD_DEFINITION
+
     type User @key(fields: \\"id\\") {
       id: ID!
-      username: String!
+      username: String! @custom
     }
 
     type Query {
@@ -70,9 +82,11 @@ test("fromValidSDLToFederatedSDL", async () => {
 
     directive @provides(fields: String!) on FIELD_DEFINITION
 
+    directive @custom on FIELD_DEFINITION
+
     type User @key(fields: "id") {
       id: ID!
-      username: String!
+      username: String! @custom # IS STRIPPED
     }
 
     type Query {
@@ -91,7 +105,9 @@ test("fromValidSDLToFederatedSDL", async () => {
     }
   `)
   ).toMatchInlineSnapshot(`
-    "type Query {
+    "directive @custom on FIELD_DEFINITION
+
+    type Query {
       me: User
     }
 

@@ -1,4 +1,10 @@
-import { buildSchema, GraphQLObjectType, GraphQLSchema, parse } from "graphql";
+import {
+  buildSchema,
+  GraphQLObjectType,
+  GraphQLSchema,
+  parse,
+  SchemaDefinitionNode,
+} from "graphql";
 import {
   buildFederatedSchema,
   printSchema as printFederatedSchema,
@@ -10,7 +16,27 @@ import { printSchemaWithDirectives } from "@graphql-tools/utils";
  * convert it to a valid SDL while preserving Federation directives.
  */
 export function fromFederatedSDLToValidSDL(sdl: string) {
-  const schema = buildFederatedSchema(parse(sdl));
+  const parsed = parse(sdl);
+  const schema = buildFederatedSchema(parsed);
+
+  // schema applied directives are lost, but we can add them back
+  const originalSchemaDirectives =
+    parsed.definitions.find(
+      (def): def is SchemaDefinitionNode => def.kind === "SchemaDefinition"
+    )?.directives ?? [];
+
+  schema.astNode = {
+    // satisfies the type checker
+    kind: "SchemaDefinition",
+    operationTypes: [],
+
+    ...(schema.astNode ?? {}),
+    directives: [
+      ...(schema.astNode?.directives ?? []),
+      ...originalSchemaDirectives,
+    ],
+  };
+
   return printSchemaWithDirectives(schema);
 }
 
