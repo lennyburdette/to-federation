@@ -1,7 +1,7 @@
 import { readFile } from "fs/promises";
 import execa from "execa";
 import { dirname, resolve } from "path";
-import { fromFederatedSDLToValidSDL } from "../src/convert";
+import { fromFederatedSDLToValidSDL } from "../src/convert.js";
 import { fileURLToPath } from "url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
