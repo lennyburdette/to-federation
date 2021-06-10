@@ -12,24 +12,19 @@ const cli = meow(
   preserving Federation directives, and vice-versa.
   
 	Usage
-	  $ to-federation --schema <filename>
+	  $ federation-converter <filename>
 
 	Options
-    --string,  -s  Schema file to transform. Pass '-' to use stdin.
-	  --reverse, -r  Transform a valid schema to federated schema.
+    <filename>    Path to a GraphQL Schema Definition file. Reads from stdin if left blank.
+	  --from-valid  Transform a valid schema to federated schema.
 
 	Examples
-	  $ to-federation --schema myschema.graphql
-    $ to-federation --schema myschema.graphql --reverse 
+	  $ federation-converter myschema.graphql
+    $ federation-converter --from-valid myschema.graphql 
 `,
   {
     importMeta: import.meta,
     flags: {
-      schema: {
-        type: "string",
-        alias: "s",
-        isRequired: true,
-      },
       reverse: {
         type: "boolean",
         alias: "r",
@@ -40,9 +35,9 @@ const cli = meow(
 
 (async () => {
   const sdl =
-    cli.flags.schema === "-"
+    typeof cli.input?.[0] !== "string"
       ? await getStdin()
-      : await readFile(cli.flags.schema, "utf-8");
+      : await readFile(cli.input[0], "utf-8");
 
   if (cli.flags.reverse) {
     console.log(fromValidSDLToFederatedSDL(sdl));
