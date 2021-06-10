@@ -1,28 +1,21 @@
-import {
-  buildSchema,
-  GraphQLObjectType,
-  GraphQLSchema,
-  parse,
-  SchemaDefinitionNode,
-} from "graphql";
-import {
-  buildFederatedSchema,
-  printSchema as printFederatedSchema,
-} from "@apollo/federation";
+import { buildSchema, GraphQLObjectType, GraphQLSchema, parse } from "graphql";
+import federation from "@apollo/federation";
 import { printSchemaWithDirectives } from "@graphql-tools/utils";
 
 /**
  * Take a GraphQL SDL string intended for Apollo Federation and
  * convert it to a valid SDL while preserving Federation directives.
+ * @param {string | import("graphql").Source} sdl
  */
-export function fromFederatedSDLToValidSDL(sdl: string) {
+export function fromFederatedSDLToValidSDL(sdl) {
   const parsed = parse(sdl);
-  const schema = buildFederatedSchema(parsed);
+  const schema = federation.buildFederatedSchema(parsed);
 
   // schema applied directives are lost, but we can add them back
   const originalSchemaDirectives =
     parsed.definitions.find(
-      (def): def is SchemaDefinitionNode => def.kind === "SchemaDefinition"
+      /** @type {(def: any) => def is import("graphql").SchemaDefinitionNode} */
+      (def) => def.kind === "SchemaDefinition"
     )?.directives ?? [];
 
   schema.astNode = {
@@ -43,8 +36,9 @@ export function fromFederatedSDLToValidSDL(sdl: string) {
 /**
  * Take a valid GraphQL SDL string and strip out Apollo Federation
  * directives, types, and fields.
+ * @param {string | import("graphql").Source} sdl
  */
-export function fromValidSDLToFederatedSDL(sdl: string) {
+export function fromValidSDLToFederatedSDL(sdl) {
   const schema = buildSchema(sdl);
 
   const query =
@@ -66,5 +60,5 @@ export function fromValidSDLToFederatedSDL(sdl: string) {
     types: typesWithoutQuery,
   });
 
-  return printFederatedSchema(schemaWithoutFederationRootFields);
+  return federation.printSchema(schemaWithoutFederationRootFields);
 }

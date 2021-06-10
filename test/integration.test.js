@@ -1,7 +1,10 @@
 import { readFile } from "fs/promises";
 import execa from "execa";
-import { resolve } from "path";
+import { dirname, resolve } from "path";
 import { fromFederatedSDLToValidSDL } from "../src/convert";
+import { fileURLToPath } from "url";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 test("integration", async () => {
   const partial = await readFile(

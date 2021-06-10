@@ -1,7 +1,7 @@
 ⚠️ **EXPERIMENTAL**: this project is unpublished and available only via Github.
 Please feel free to submit issues but I can't guarantee a response.
 
-# to-federation
+# federation-converter
 
 Utility for converting GraphQL schemas intended for [Apollo Federation][fed]
 into valid GraphQL documents.
@@ -17,7 +17,7 @@ This precludes the use of tools like [graphql-schema-linter][lint]. Use this
 utility to convert the schema before linting:
 
 ```sh
-npx github:lennyburdette/to-federation --schema myschema.graphql | npx \
+npx github:apollosolutions/federation-converter myschema.graphql | npx \
   graphql-schema-linter --stdin
 ```
 
@@ -25,7 +25,7 @@ You can also convert a valid GraphQL schema into a federated schema for use
 with Apollo tools like [rover][rover]:
 
 ```sh
-npx github:lennyburdette/to-federation --schema accounts.graphql --reverse | \
+npx github:apollosolutions/federation-converter --from-valid accounts.graphql | \
   rover subgraph publish mygraph@current --name accounts --schema -
 ```
 
