@@ -1,7 +1,7 @@
 import {
   fromFederatedSDLToValidSDL,
   fromValidSDLToFederatedSDL,
-} from "../src/convert";
+} from "../src/convert.js";
 
 test("fromFederatedSDLToValidSDL", async () => {
   expect(

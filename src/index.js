@@ -6,7 +6,7 @@ import getStdin from "get-stdin";
 import {
   fromFederatedSDLToValidSDL,
   fromValidSDLToFederatedSDL,
-} from "./convert";
+} from "./convert.js";
 
 const cli = meow(
   `
