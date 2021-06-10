@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { readFile } from "fs/promises";
 import meow from "meow";
 import getStdin from "get-stdin";
@@ -25,7 +27,7 @@ const cli = meow(
   {
     importMeta: import.meta,
     flags: {
-      reverse: {
+      fromValid: {
         type: "boolean",
         alias: "r",
       },
@@ -39,7 +41,7 @@ const cli = meow(
       ? await getStdin()
       : await readFile(cli.input[0], "utf-8");
 
-  if (cli.flags.reverse) {
+  if (cli.flags.fromValid) {
     console.log(fromValidSDLToFederatedSDL(sdl));
   } else {
     console.log(fromFederatedSDLToValidSDL(sdl));

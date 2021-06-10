@@ -57,5 +57,5 @@ adding a [configuration file][config] with these settings:
 - Line numbers change completely, so the schema linting report won't accurately
   reference lines and columns in the original file.
 - Applied directives are stripped when converting a valid schema to a federated
-  one with `--reverse`. This is currently the expected behavior with federated
+  one with `--fromValid`. This is currently the expected behavior with federated
   graphs.
